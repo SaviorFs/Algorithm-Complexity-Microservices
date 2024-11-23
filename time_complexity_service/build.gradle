@@ -1,0 +1,41 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group 'com.example.timecomplexity'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // SparkJava for web framework
+    implementation 'com.sparkjava:spark-core:2.9.4'
+
+    // Gson for JSON parsing
+    implementation 'com.google.code.gson:gson:2.8.9'
+
+    // SLF4J for logging
+    implementation 'org.slf4j:slf4j-simple:1.7.36'
+
+    // JavaParser for parsing Java code
+    implementation 'com.github.javaparser:javaparser-core:3.25.4'
+}
+
+application {
+    mainClass = 'com.example.App' // Updated property
+}
+
+jar {
+    manifest {
+        attributes(
+            'Main-Class': application.mainClass
+        )
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
