@@ -1,5 +1,7 @@
 package com.example;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -7,7 +9,7 @@ import java.util.Scanner;
 
 public class HttpClient {
     public static String post(String urlString, String jsonPayload) throws Exception {
-        URL url = new URL(urlString);
+        URL url = Urls.create(urlString, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setDoOutput(true);
         conn.setRequestMethod("POST");
